@@ -35,7 +35,7 @@ class Card:
             return f"{self.rank} of {self.suit}"
 
 class Deck:
-    # Class that creates a new 312 card deck (6, 52 card Decks) while storing card attribues
+    # Class that creates a new 52 card deck while storing card attribues
     def __init__(self):
         self.all_cards = []
         for suit in suits:
@@ -49,11 +49,6 @@ class Deck:
     def deal(self):
         # Method that removes top card of the deck
         return self.all_cards.pop(0)
-    
-    def show_deck(self):
-        # Method that prints out entire deck (not used during gameplay)
-        for card_object in self.all_cards:
-            print(card_object)
 
 class Hand:
     # Class that tracks what cards are in hand, total value of the cards, 
@@ -79,16 +74,11 @@ class Hand:
             for card_object in self.cards:
                 print(card_object)
                 
-    def show_aces(self):
-        # Method that prints out aces for troubleshooing
-        print(self.aces)
-
 class Chips:
     # Class that stores total chip balance and current bet amount
     def __init__(self,total,bet):
         self.total = total
         self.bet = bet
-        
         
     def win_bet(self):
         # Method that adds bet amount to player chip balance
@@ -129,7 +119,8 @@ def hit(Hand):
     Hand.add_card(new_deck.deal())
 
 def hit_or_stand():
-    global choice
+    # Function that asks players if they want to Hit or Stand
+    global choice # choice is used later to determine flow of gameplay
     
     while True: # Loop until choice is valid
         choice = input("(H)IT or (S)TAND? : ").upper()
@@ -155,7 +146,7 @@ def show_some(player,dealer):
     print("\n----------------\n")
     
 def show_all(player,dealer):
-    # Function that shows all dealer and all player cards
+    # Function that shows all player and all dealer cards
     print("\n----------------")
     print("[PLAYER's HAND]\n")
     for card_object in player.cards:
@@ -186,7 +177,7 @@ def push():
     print("\nIt's a PUSH (tie)\n\nBet returned to your Chip Balance\n")
 
 def play_again():
-    global play_choice
+    global play_choice #  play choice used later to determine if player wants to play again. 
     while True:
             play_choice = input("\nWould you like to play again? Y or N: \n").upper()
             if play_choice not in ["YES","NO","Y","N"]:
@@ -215,19 +206,19 @@ print("For feedback, you can reach me @KyserClark or KyserClark.com\n")
 input("Press ENTER to start playing")
 
 # Create player balance using Chip Class
-# Set Player Chip Balance to 100 when starting new game
+# Set Player Chip Balance to 100, and Bet amount to 0 when starting new game
 balance = Chips(100,0)
-# Create and shuffle deck to start game
+# Create and shuffle a new deck to start game
 new_deck = Deck()
 new_deck.shuffle()
 hands_played = 0  # Keeps track of hands played, start at 0
 
 while True:
-    if hands_played >= 5: # Needs to be 6 and not 5 since tally happens before the hand is played
-        # Create & shuffle the deck if hands played is 5 or more
+    if hands_played >= 5: # Only if 5 hands have been played
+        # Create & shuffle a new deck
         new_deck = Deck()
         new_deck.shuffle()
-        print("\nTHE DECK HAS BEEN SHUFFLED\n")
+        print("\nTHE DECK HAS BEEN SHUFFLED\n") # Informs player that the deck has been shuffled
         hands_played = 0 # Reset hands played count
     
     # Informs player the amount of hands played since last shuffle
@@ -253,7 +244,7 @@ while True:
     if player_hand.value == 21:
         print("YOU HAVE A BLACKJACK!!!")
         player_blackjack = True
-        balance.bet = int(balance.bet * 1.5) # Player gets paid 3 to 2 (150%) of their bet
+        balance.bet = int(balance.bet * 1.5) # Change bet amount so Player gets paid 3 to 2 (150%) of their bet
     else:
         player_blackjack = False
         
@@ -280,23 +271,22 @@ while True:
                 break
 
             # If player stands, break out of loop
-            if choice in ["STAND","S"]: # If player stays, print out hand
+            if choice in ["STAND","S"]:
                 break
 
-    # If Player hasn't busted, play Dealer's hand until Dealer reaches 17
-    # Do not play dealer hand if either player or dealer has Blackjack
+    # Only play dealer hand if neither player or dealer has Blackjack and if player didn't bust
     if player_hand.value <= 21 and player_blackjack == False and dealer_blackjack == False:
-        show_all(player_hand,dealer_hand)
-        while dealer_hand.value < 17:
+        show_all(player_hand,dealer_hand) # Show all cards to reveal dealer hidden card to player
+        while dealer_hand.value < 17: # Dealer must hit until they reach 17 or more
             input("\nDealer must HIT, Press Enter to see next card: \n")
-            dealer_hand.add_card(new_deck.deal())
-            show_all(player_hand,dealer_hand)
+            dealer_hand.add_card(new_deck.deal()) # Add card to dealer hand
+            show_all(player_hand,dealer_hand) # Show all cards to show the new dealer card
             
     # Show All Cards (only if player didn't bust)
     if player_hand.value <= 21:
         show_all(player_hand,dealer_hand)
     
-    # Check for win conditions and run win functions only if Player didn't bust    
+    # Check for win conditions and run win functions only if player didn't bust    
     if dealer_hand.value > 21 and player_hand.value <= 21:
             dealer_busts()
         
@@ -309,10 +299,10 @@ while True:
     if player_hand.value == dealer_hand.value and player_hand.value <= 21:
             push()
                 
-    # Inform Player of their chips total
+    # Inform player of their chips total
     print(f"\nYour Chip Balance is: {balance.total}\n")
     
-    # Add 1 to hands played tally
+    # Add 1 to the hands played tally
     hands_played += 1
     
     # Check Chip Balance for GAME OVER Condition    
@@ -320,11 +310,11 @@ while True:
         play_again()
         
     if balance.total <= 1:
-        print("GAME OVER Out of Chips")
+        print("GAME OVER You are out of Chips")
         play_again()
         if play_choice in ["YES","Y"]:
-            # Reset Player Chip Balance if they want to play again
+            # Reset Player Chip Balance to 100, and Bet amount to 0 if they want to play again
             balance = Chips(100,0)
     
     if play_choice in ["NO", "N"]:
-        break
+        break # Break loop and close program if player doesn't want to play again
