@@ -244,7 +244,8 @@ while True:
     if player_hand.value == 21:
         print("YOU HAVE A BLACKJACK!!!")
         player_blackjack = True
-        balance.bet = int(balance.bet * 1.5) # Change bet amount so Player gets paid 3 to 2 (150%) of their bet
+        # Change bet amount so Player gets paid 3 to 2 (150%) of their bet
+        balance.bet = int(balance.bet * 1.5) 
     else:
         player_blackjack = False
         
