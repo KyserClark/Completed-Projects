@@ -8,10 +8,13 @@ KyserClark.com
 Thank you for reading my code!
 This is my 2nd completed project in any programming language
 It took me 23 hours to go from a blank slate to this
-I'm still pretty new to programming (only 82 Hours of learning and practice at this point)
-So it might not be the cleanest code, but this is the best my abilities can come up with for now. 
+I'm still pretty new to programming 
+(only 82 Hours of learning and practice at this point)
+So it might not be the cleanest code, 
+but this is the best my abilities can come up with for now. 
 Feel free to contact me and give me constructive criticism
-I'm interested in learning and getting better, so don't hold back when giving feedback
+I'm interested in learning and getting better, 
+so don't hold back when giving feedback
 
 '''
 
@@ -19,12 +22,14 @@ I'm interested in learning and getting better, so don't hold back when giving fe
 import random
 # Card attributes for card class
 suits = ('Hearts','Clubs','Diamonds','Spades')
-ranks = ('Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Jack','Queen','King','Ace')
-values = {'Two':2,'Three':3,'Four':4,'Five':5,'Six':6,'Seven':7,'Eight':8,'Nine':9,'Ten':10,
-         'Jack':10,'Queen':10,'King':10,'Ace':11} # Aces are high (11) until they need to be low (1)
+ranks = ('Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Jack',
+         'Queen','King','Ace')
+values = {'Two':2,'Three':3,'Four':4,'Five':5,'Six':6,'Seven':7,'Eight':8,
+          'Nine':9,'Ten':10,'Jack':10,'Queen':10,'King':10,'Ace':11} 
+          # Aces are high (11) until they need to be low (1)
 
 class Card:
-    # Class that creates a single card and stores card attribues
+    # Class that creates a single card and stores card attributes
         def __init__(self,rank,suit):
             self.rank = rank 
             self.suit = suit
@@ -35,7 +40,7 @@ class Card:
             return f"{self.rank} of {self.suit}"
 
 class Deck:
-    # Class that creates a new 52 card deck while storing card attribues
+    # Class that creates a new 52 card deck and stores card attributes
     def __init__(self):
         self.all_cards = []
         for suit in suits:
@@ -51,7 +56,7 @@ class Deck:
         return self.all_cards.pop(0)
 
 class Hand:
-    # Class that tracks what cards are in hand, total value of the cards, 
+    # Class that tracks what cards are in hand, total value of the cards 
     # and determines if aces are high or low for the hand
     def __init__(self):
         self.cards = []  # start with zero cards
@@ -59,7 +64,8 @@ class Hand:
         self.aces = 0    # attribute to keep track of aces
     
     def add_card(self,dealt_card):
-        # Method that deals top card from the deck to the hand and takes record of Aces in hand
+        # Method that deals top card from the deck to the hand 
+        # and takes record of Aces in hand
         # Subtracts 10 from total value for each Ace over 21
         self.cards.append(dealt_card)
         if dealt_card.rank == 'Ace':
@@ -93,25 +99,30 @@ class Chips:
         return f"\nChip Balance is {self.total}\n"
 
 def take_bet():
-    # Function that askes player to input a bet and stores bet amount in Chip class
+    # Function that asks player to input a bet 
+    # and stores bet amount in Chip class
     while True:
         try:
             print(f"\nYour Chip Balance is: {balance.total}\n")
             print("\nBet must be between 2 and 500")
             balance.bet = int(input("\nPLACE YOUR BET: \n"))
-            
-        except ValueError: # while loop continues if user input is not an integer
+        
+        # while loop continues if user input is not an integer    
+        except ValueError: 
             print("\nError: Input an integer\n")
             continue
             
         else:
             # Valid Bet, break out of while loop
-            if balance.bet <= balance.total and balance.bet > 1 and balance.bet < 501: 
-                print(f"\nGood luck!!\n")
-                break
-                
-            if balance.bet > balance.total: # Invalid Bet, continue while loop
-                print("\nCan't place bet because it exceeds your chip balance\n")
+            if balance.bet <= balance.total and balance.bet > 1 and \
+               balance.bet < 501: 
+               print(f"\nGood luck!!\n")
+               break
+
+            # Invalid Bet, continue while loop    
+            if balance.bet > balance.total: 
+                print("\nCan't place bet\
+                 because it exceeds your chip balance\n")
                 continue
 
 def hit(Hand):
@@ -120,7 +131,7 @@ def hit(Hand):
 
 def hit_or_stand():
     # Function that asks players if they want to Hit or Stand
-    global choice # choice is used later to determine flow of gameplay
+    global choice # choice is used later to determine flow of game-play
     
     while True: # Loop until choice is valid
         choice = input("(H)IT or (S)TAND? : ").upper()
@@ -133,7 +144,8 @@ def hit_or_stand():
         hit(player_hand)
 
 def show_some(player,dealer):
-    # Funciton that reveals 1st dealer card and emulates the 2nd card being face down
+    # Function that reveals 1st dealer card 
+    # and emulates the 2nd card being face down
     # Then shows player full hand
     print("\n----------------")
     print("\n[DEALER's HAND]\n")
@@ -177,9 +189,11 @@ def push():
     print("\nIt's a PUSH (tie)\n\nBet returned to your Chip Balance\n")
 
 def play_again():
-    global play_choice #  play choice used later to determine if player wants to play again. 
+    # Play choice used later to determine if player wants to play again.
+    global play_choice 
     while True:
-            play_choice = input("\nWould you like to play again? Y or N: \n").upper()
+            play_choice = input("\nWould you like to play again? Y or N: \
+                                 \n").upper()
             if play_choice not in ["YES","NO","Y","N"]:
                 print("\nChoice not valid, try again\n")
             else:
@@ -189,24 +203,39 @@ def play_again():
 print("Welcome to Kyser Clark's Blackjack!!\n")
 print("Thank you for checking it out!")
 print("This is a one player game where you play against the Dealer.")
-print("The goal of the game is to get your hand closer to 21 than the Dealer's hand.")
-print("A hand value greater than 21 is called a BUST (Hand is a losing hand).")
+print("The goal of the game is to get your hand closer to 21 \
+than the Dealer's hand.")
+
+print("A hand value greater than 21 is called a BUST \
+(Hand is a losing hand).")
+
 print("The Dealer will always HIT if their hand is below 17.") 
 print("The Dealer will always STAND if their hand is 17 or greater.")
-print("Your starting chip balance is 100. Minimum bet is 2 chips, Maximum bet is 500 chips")
+print("Your starting chip balance is 100. Minimum bet is 2 chips, \
+Maximum bet is 500 chips")
+
 print("If you have a Blackjack, your payout is 3 to 2 (150%)")
-print("For the sake of simplicity, you cannot double-down, place insurance, or split.")
+print("For the sake of simplicity, you cannot double-down, \
+place insurance, or split.")
+
 print("You can only (H)IT, or (S)TAND.")
-print("You lose the game if your chip balance is below 1, but don't worry, you can always play again.")
+print("You lose the game if your chip balance is below 1, \
+but don't worry, you can always play again.")
+
 print("Number Cards are worth their number value.")
 print("Face Cards (Jack, Queen, and King) are worth 10.")
-print("Aces are worth 1 or 11. Whichever is more beneficial to the hand.")
-print("The 52 card deck is shuffled after 5 hands have been dealt. This is to YOUR advantage")
+print("Aces are worth 1 or 11. \
+Whichever is more beneficial to the hand.")
+
+print("The 52 card deck is shuffled after 5 hands have been dealt. \
+This is to YOUR advantage")
+
 print("For feedback, you can reach me @KyserClark or KyserClark.com\n")
 input("Press ENTER to start playing")
 
 # Create player balance using Chip Class
-# Set Player Chip Balance to 100, and Bet amount to 0 when starting new game
+# Set Player Chip Balance to 100, 
+# and Bet amount to 0 when starting new game
 balance = Chips(100,0)
 # Create and shuffle a new deck to start game
 new_deck = Deck()
@@ -218,7 +247,8 @@ while True:
         # Create & shuffle a new deck
         new_deck = Deck()
         new_deck.shuffle()
-        print("\nTHE DECK HAS BEEN SHUFFLED\n") # Informs player that the deck has been shuffled
+        # Inform player that the deck has been shuffled
+        print("\nTHE DECK HAS BEEN SHUFFLED\n") 
         hands_played = 0 # Reset hands played count
     
     # Informs player the amount of hands played since last shuffle
@@ -244,7 +274,7 @@ while True:
     if player_hand.value == 21:
         print("YOU HAVE A BLACKJACK!!!")
         player_blackjack = True
-        # Change bet amount so Player gets paid 3 to 2 (150%) of their bet
+        # Change bet amount so Player gets paid 3:2 (150%) of their bet
         balance.bet = int(balance.bet * 1.5) 
     else:
         player_blackjack = False
@@ -265,7 +295,8 @@ while True:
             # Show cards (but keep one dealer card hidden)
             show_some(player_hand,dealer_hand)
 
-            # If player's hand exceeds 21, run player_busts() and break out of loop
+            # If player's hand exceeds 21, 
+            # run player_busts() and break out of loop
             if player_hand.value > 21:
                 show_all(player_hand,dealer_hand) # Show all cards
                 player_busts()
@@ -275,27 +306,37 @@ while True:
             if choice in ["STAND","S"]:
                 break
 
-    # Only play dealer hand if neither player or dealer has Blackjack and if player didn't bust
-    if player_hand.value <= 21 and player_blackjack == False and dealer_blackjack == False:
-        show_all(player_hand,dealer_hand) # Show all cards to reveal dealer hidden card to player
-        while dealer_hand.value < 17: # Dealer must hit until they reach 17 or more
-            input("\nDealer must HIT, Press Enter to see next card: \n")
-            dealer_hand.add_card(new_deck.deal()) # Add card to dealer hand
-            show_all(player_hand,dealer_hand) # Show all cards to show the new dealer card
+    # Only play dealer hand if neither player or dealer has Blackjack 
+    # and if player didn't bust
+    if player_hand.value <= 21 and player_blackjack == False and \
+       dealer_blackjack == False:
+       # Show all cards to reveal dealer hidden card to player
+       show_all(player_hand,dealer_hand) 
+       
+       # Dealer must hit until they reach 17 or more
+       while dealer_hand.value < 17: 
+        input("\nDealer must HIT, Press Enter to see next card: \n")
+        # Add card to dealer hand
+        dealer_hand.add_card(new_deck.deal()) 
+        # Show all cards to show the new dealer card
+        show_all(player_hand,dealer_hand) 
             
     # Show All Cards (only if player didn't bust)
     if player_hand.value <= 21:
         show_all(player_hand,dealer_hand)
     
-    # Check for win conditions and run win functions only if player didn't bust    
+    # Check for win conditions
+    # run win functions only if player didn't bust    
     if dealer_hand.value > 21 and player_hand.value <= 21:
             dealer_busts()
         
-    if dealer_hand.value > player_hand.value and dealer_hand.value <= 21 and player_hand.value <= 21:
-            dealer_wins()
+    if dealer_hand.value > player_hand.value and dealer_hand.value <= 21 and \
+       player_hand.value <= 21:
+       dealer_wins()
             
-    if player_hand.value > dealer_hand.value and player_hand.value <= 21 and player_hand.value <= 21:
-            player_wins()
+    if player_hand.value > dealer_hand.value and player_hand.value <= 21 and \
+       player_hand.value <= 21:
+       player_wins()
             
     if player_hand.value == dealer_hand.value and player_hand.value <= 21:
             push()
@@ -314,8 +355,10 @@ while True:
         print("GAME OVER You are out of Chips")
         play_again()
         if play_choice in ["YES","Y"]:
-            # Reset Player Chip Balance to 100, and Bet amount to 0 if they want to play again
+            # Reset Player Chip Balance to 100
+            # Reset Bet amount to 0 if player wants to play again
             balance = Chips(100,0)
-    
+
+    # Break loop and close program if player doesn't want to play again
     if play_choice in ["NO", "N"]:
-        break # Break loop and close program if player doesn't want to play again
+        break 
