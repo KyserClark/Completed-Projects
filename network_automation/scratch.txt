@@ -1,0 +1,31 @@
+enable
+config t
+!
+hostname S6
+!
+interface Vlan1
+ip address 192.168.122.86 255.255.255.0
+no shut
+!
+username root privilege 15 password root
+!
+no ip domain-lookup
+!
+
+!
+line vty 0 4
+transport input telnet ssh
+login local
+privilege level 15
+logging synchronous
+!
+line console 0
+login local
+logging synchronous
+exit
+ip domain-name gns.local
+crypto key generate rsa general
+1024
+end
+wr
+

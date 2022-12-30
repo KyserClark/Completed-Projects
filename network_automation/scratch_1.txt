@@ -1,0 +1,15 @@
+enable
+conf t
+username Kyser pass Kyser
+username Kyser priv 15
+
+line vty 0 4
+ login local
+ transport input all
+
+ip domain-name hacker
+crypto key generate rsa
+1024
+
+end
+wr
