@@ -1,0 +1,3 @@
+In Python you can make games.
+In Python you can work with large amounts of data.
+In Python you can solve problems.

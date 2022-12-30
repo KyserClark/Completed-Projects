@@ -1,0 +1,1 @@
+print('“A quitter never wins and a winner never quits.” -Napolean Hill')
